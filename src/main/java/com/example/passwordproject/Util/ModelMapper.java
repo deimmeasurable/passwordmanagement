@@ -16,9 +16,5 @@ public class ModelMapper {
         siteResponse.setResponse("registeration successful");
         return userResponse;
     }
-    public static  SiteResponse map_siteResponse(SiteResponse siteResponse){
-//        SiteResponse siteResponse = new SiteResponse();
-        siteResponse.setResponse("your password was save successfully");
-        return siteResponse;
-    }
+
 }

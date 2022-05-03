@@ -12,5 +12,6 @@ public class UserRequest {
     private String uniquePassword;
     private String firstName;
     private String lastName;
-
+    private String listOfPassword;
+    private String url;
 }
