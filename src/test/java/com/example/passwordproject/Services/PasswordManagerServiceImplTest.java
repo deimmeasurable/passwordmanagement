@@ -120,7 +120,7 @@ class PasswordManagerServiceImplTest {
 
 //       SiteResponse response= passwordManagerService.userAddDifferentPassword(request);
 
-        assertThrows(UserIsNotLogInExeception.class, () -> passwordManagerService.userAddDifferentPassword(request));
+        assertThrows(UserIsNotLogInExeception.class, () -> passwordManagerService.userAddPasswordToListOfPassword(request));
 //        assertThat(response.getResponse(), is("user did not login"));
 
     }
@@ -184,8 +184,32 @@ class PasswordManagerServiceImplTest {
 
     }
 
+//    @Test
+//    void testThatRegisterUserCanLogInToWhatappsWithAnotherPasswordAndUserName() {
+//        UserRequest userRequest1 = new UserRequest();
+//        userRequest1.setUniquePassword("cEase@2349");
+//        userRequest1.setEmail("zeus7865@yahoo.com");
+//        userRequest1.setFirstName("fashola");
+//        userRequest1.setLastName("folashile");
+//        passwordManagerService.createAccount(userRequest1);
+//
+//        SitePasswordSaved request = new SitePasswordSaved();
+//        request.setEmail("zeus7865@yahoo.com");
+//        request.setUrl("www.Whatapps.com");
+//        request.setUsername("killIt1234");
+//        request.setPassword("StormTheyard!123");
+//        SiteResponse siteResponse = passwordManagerService.savedUserCanLogInToWhatAppsWithAnotherPasswordAndUsername(request);
+//        //save password for this url site
+//        //assert that the password exist
+//        assertThat(request.getUrl(), is("www.Whatapps.com"));
+//        assertThat(request.getUsername(), is("killIt1234"));
+//        assertThat(request.getPassword(), is("StormTheyard!123"));
+//        assertThat(siteResponse.getResponse(), is("your password was saved successfully"));
+//    }
+
     @Test
-    void testThatRegisterUserCanLogInToWhatappsWithAnotherPasswordAndUserName() {
+    void testUserCanUpdatePassword() {
+
         UserRequest userRequest1 = new UserRequest();
         userRequest1.setUniquePassword("cEase@2349");
         userRequest1.setEmail("zeus7865@yahoo.com");
@@ -193,26 +217,11 @@ class PasswordManagerServiceImplTest {
         userRequest1.setLastName("folashile");
         passwordManagerService.createAccount(userRequest1);
 
-        SitePasswordSaved request = new SitePasswordSaved();
-        request.setEmail("zeus7865@yahoo.com");
-        request.setUrl("www.Whatapps.com");
-        request.setUsername("killIt1234");
-        request.setPassword("StormTheyard!123");
-        SiteResponse siteResponse = passwordManagerService.savedUserCanLogInToWhatAppsWithAnotherPasswordAndUsername(request);
-        //save password for this url site
-        //assert that the password exist
-        assertThat(request.getUrl(), is("www.Whatapps.com"));
-        assertThat(request.getUsername(), is("killIt1234"));
-        assertThat(request.getPassword(), is("StormTheyard!123"));
-        assertThat(siteResponse.getResponse(), is("your password was saved successfully"));
-    }
-
-    @Test
-    void testUserCanUpdatePassword() {
-        getUserRequest();
-        User user = passwordManagerService.userCanUpdateTheirPassword("zeus7865@yahoo.com", "deThrate345@");
+        User user = passwordManagerService.userCanUpdateTheirPassword(userRequest1, "deThrate345@");
         assertThat(user.getPassword(), is("deThrate345@"));
         assertThat(user.getEmail(), is("zeus7865@yahoo.com"));
+        assertThat(user.getFirstName(),is("fashola"));
+        assertThat(user.getLastName(),is("folashile"));
     }
 
     @Test

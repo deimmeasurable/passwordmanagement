@@ -17,5 +17,5 @@ public class UserListOfPassword {
     private String username;
     private String email;
     private String password;
-    private User owner;
+
 }

@@ -14,18 +14,18 @@ public interface PasswordManagerService {
     List<User> getAllUsers();
 
 
-    SiteResponse savedUserCanLogInToInstagramWithAnotherPasswordAndUsername(SitePasswordSaved request);
+
 
     SiteResponse savedUserCanLogInToWhatAppsWithAnotherPasswordAndUsername(SitePasswordSaved request);
 
 
-   User userCanUpdateTheirPassword(String email,String password);
+   User userCanUpdateTheirPassword(UserRequest request,String password);
 
 
 
    SiteResponse userMustLogInBeforeTheyCanSavePassword(String email, String password);
 
-    SiteResponse userAddDifferentPassword(SitePasswordSaved request);
+    SiteResponse userAddPasswordToListOfPassword(SitePasswordSaved request);
 
     SiteResponse savedUserCanSavePasswordOfUrl(SitePasswordSaved request);
 

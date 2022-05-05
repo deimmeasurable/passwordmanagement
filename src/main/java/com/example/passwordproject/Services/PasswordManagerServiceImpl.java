@@ -76,27 +76,7 @@ public class PasswordManagerServiceImpl implements PasswordManagerService {
     }
 
 
-    @Override
-    public SiteResponse savedUserCanLogInToInstagramWithAnotherPasswordAndUsername(SitePasswordSaved request) {
-        User foundUser = userPassWordRepository.findUserByEmail(request.getEmail());
 
-        if (foundUser == null) throw new UserNotFoundException("user don't exist");
-        if(!foundUser.isUserStatus()==false){throw new UserIsNotLogInExeception("user did not log in");}
-        List<UserListOfPassword> userPassword = foundUser.getPasswordToSave();
-
-        UserListOfPassword userListOfPassword = new UserListOfPassword();
-        userListOfPassword.setPassword(request.getPassword());
-        userListOfPassword.setUsername(request.getUsername());
-        userListOfPassword.setUrl(request.getUrl());
-        userPassword.add(userListOfPassword);
-
-        userPassWordRepository.save(foundUser);
-
-        SiteResponse siteResponse = new SiteResponse();
-        siteResponse.setResponse("your password was saved successfully");
-        return siteResponse;
-
-    }
 
     @Override
     public SiteResponse savedUserCanLogInToWhatAppsWithAnotherPasswordAndUsername(SitePasswordSaved Whatapprequest) {
@@ -127,13 +107,20 @@ public class PasswordManagerServiceImpl implements PasswordManagerService {
     }
 
     @Override
-    public User userCanUpdateTheirPassword(String email, String password) {
-        User user = userPassWordRepository.findUserByEmail(email);
+    public User userCanUpdateTheirPassword(UserRequest request, String password) {
+        User user = userPassWordRepository.findUserByEmail(request.getEmail());
 
         if (user == null) throw new UserNotFoundException("user don't exist");
+
+//        user.setUserStatus(true);
+
         if(!user.isUserStatus()==false){throw new UserIsNotLogInExeception("user did not log in");}
         userPassWordRepository.delete(user);
+        user.setUserStatus(true);
         user.setPassword(password);
+        user.setEmail(request.getEmail());
+        user.setLastName(request.getLastName());
+        user.setFirstName(request.getFirstName());
         userPassWordRepository.save(user);
 
 
@@ -161,7 +148,7 @@ public class PasswordManagerServiceImpl implements PasswordManagerService {
     }
 
     @Override
-    public SiteResponse userAddDifferentPassword(SitePasswordSaved request) {
+    public SiteResponse userAddPasswordToListOfPassword(SitePasswordSaved request) {
        SiteResponse siteResponse = new SiteResponse();
         User foundUser =userPassWordRepository.findUserByEmail(request.getEmail());
         if(!foundUser.isUserStatus()){throw new UserIsNotLogInExeception("user did not login");}

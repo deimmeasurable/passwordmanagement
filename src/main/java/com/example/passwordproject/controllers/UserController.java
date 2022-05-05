@@ -77,11 +77,11 @@ public class UserController {
             return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
         }
     }
-    @PatchMapping("/updatePassword/{email}/{password}")
-    public ResponseEntity<?> userCanUpdateTheirPassword(@PathVariable String email, @PathVariable String password){
+    @PatchMapping("/updatePassword/request/{password}")
+    public ResponseEntity<?> userCanUpdateTheirPassword(@RequestBody UserRequest request, @PathVariable String password){
         try {
             ApiResponseUpdatePassword response =  ApiResponseUpdatePassword.builder()
-                    .payLoad(passwordManagerService.userCanUpdateTheirPassword(email, password))
+                    .payLoad(passwordManagerService.userCanUpdateTheirPassword(request, password))
                     .message("password update successfully")
                     .isSuccessful(true)
                     .build();
@@ -89,7 +89,7 @@ public class UserController {
         }catch (UserNotFoundException e){
             ApiResponse response = ApiResponse.builder()
                     .message(e.getMessage())
-                    .isSuccessful(true)
+                    .isSuccessful(false)
                     .build();
             return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
         }
